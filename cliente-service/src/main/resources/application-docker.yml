@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://cliente-db:5432/cliente_db
+    username: banco
+    password: banco
+
+server:
+  port: 8081

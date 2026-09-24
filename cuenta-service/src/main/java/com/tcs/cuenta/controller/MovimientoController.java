@@ -30,4 +30,17 @@ public class MovimientoController {
     public List<MovimientoResponse> listar() {
         return movimientoService.listar();
     }
+
+    @PutMapping("/{id}")
+    public MovimientoResponse actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody MovimientoRequest request) {
+        return movimientoService.actualizar(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void eliminar(@PathVariable Long id) {
+        movimientoService.eliminar(id);
+    }
 }

@@ -79,4 +79,59 @@ public class MovimientoService {
                 movimiento.getCuenta().getNumeroCuenta()
         );
     }
+
+    @Transactional
+    public MovimientoResponse actualizar(Long id, MovimientoRequest request) {
+
+        Movimiento movimiento = movimientoRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Movimiento no encontrado"));
+
+        Cuenta cuenta = movimiento.getCuenta();
+
+        BigDecimal valor = request.valor();
+
+        if (request.tipoMovimiento().equalsIgnoreCase("Retiro")) {
+            valor = valor.negate();
+        }
+
+        movimiento.setTipoMovimiento(request.tipoMovimiento());
+        movimiento.setValor(valor);
+
+        recalcularSaldo(cuenta);
+
+        movimiento = movimientoRepository.save(movimiento);
+
+        return toResponse(movimiento);
+    }
+
+    @Transactional
+    public void eliminar(Long id) {
+
+        Movimiento movimiento = movimientoRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Movimiento no encontrado"));
+
+        Cuenta cuenta = movimiento.getCuenta();
+
+        movimientoRepository.delete(movimiento);
+
+        recalcularSaldo(cuenta);
+    }
+
+    private void recalcularSaldo(Cuenta cuenta) {
+
+        List<Movimiento> movimientos =
+                movimientoRepository.findByCuentaIdOrderByFechaAsc(cuenta.getId());
+
+        BigDecimal saldo = cuenta.getSaldoInicial();
+
+        for (Movimiento movimiento : movimientos) {
+            saldo = saldo.add(movimiento.getValor());
+            movimiento.setSaldo(saldo);
+        }
+
+        cuenta.setSaldoActual(saldo);
+        cuentaRepository.save(cuenta);
+    }
 }

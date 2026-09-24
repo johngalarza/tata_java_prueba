@@ -15,4 +15,6 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
             LocalDateTime fechaInicio,
             LocalDateTime fechaFin
     );
+
+    List<Movimiento> findByCuentaIdOrderByFechaAsc(Long cuentaId);
 }
