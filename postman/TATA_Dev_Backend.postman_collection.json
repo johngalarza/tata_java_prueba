@@ -1,0 +1,522 @@
+{
+  "info": {
+    "_postman_id": "c2c5f1f6-1f0a-4d0b-9a6d-4a6f3c7d1f20",
+    "name": "TATA Dev Backend",
+    "description": "Coleccion para validar los endpoints implementados por cliente-service y cuenta-service.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "cliente_url",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "cuenta_url",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "cliente_id",
+      "value": "1"
+    },
+    {
+      "key": "cuenta_id",
+      "value": "1"
+    },
+    {
+      "key": "numero_cuenta",
+      "value": "478758"
+    },
+    {
+      "key": "movimiento_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Clientes",
+      "item": [
+        {
+          "name": "Crear cliente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Jose Lema\",\n  \"genero\": \"Masculino\",\n  \"edad\": 35,\n  \"identificacion\": \"0102030405\",\n  \"direccion\": \"Otavalo sn y principal\",\n  \"telefono\": \"0987654321\",\n  \"clienteId\": \"jose\",\n  \"contrasena\": \"1234\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "{{cliente_url}}/api/clientes",
+              "host": [
+                "{{cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            },
+            "description": "Crea un cliente y guarda su id de respuesta en cliente_id."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Cliente creado', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "var body = pm.response.json();",
+                  "if (body.id !== undefined) { pm.collectionVariables.set('cliente_id', body.id); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar clientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{cliente_url}}/api/clientes",
+              "host": [
+                "{{cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener cliente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{cliente_url}}/api/clientes/{{cliente_id}}",
+              "host": [
+                "{{cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "{{cliente_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar cliente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Jose Lema\",\n  \"genero\": \"Masculino\",\n  \"edad\": 36,\n  \"identificacion\": \"0102030405\",\n  \"direccion\": \"Otavalo sn y principal\",\n  \"telefono\": \"0987654321\",\n  \"clienteId\": \"jose\",\n  \"contrasena\": \"1234\",\n  \"estado\": true\n}"
+            },
+            "url": {
+              "raw": "{{cliente_url}}/api/clientes/{{cliente_id}}",
+              "host": [
+                "{{cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "{{cliente_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar cliente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{cliente_url}}/api/clientes/{{cliente_id}}",
+              "host": [
+                "{{cliente_url}}"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "{{cliente_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cuentas",
+      "item": [
+        {
+          "name": "Crear cuenta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipoCuenta\": \"Ahorros\",\n  \"saldoInicial\": 1000,\n  \"estado\": true,\n  \"clienteId\": \"jose\"\n}"
+            },
+            "url": {
+              "raw": "{{cuenta_url}}/api/cuentas",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "cuentas"
+              ]
+            },
+            "description": "Crea una cuenta con saldo inicial de 1000 y clienteId jose."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Cuenta creada', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "var body = pm.response.json();",
+                  "if (body.id !== undefined) { pm.collectionVariables.set('cuenta_id', body.id); }",
+                  "if (body.numeroCuenta !== undefined) { pm.collectionVariables.set('numero_cuenta', body.numeroCuenta); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar cuentas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{cuenta_url}}/api/cuentas",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "cuentas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener cuenta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{cuenta_url}}/api/cuentas/{{cuenta_id}}",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "cuentas",
+                "{{cuenta_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar cuenta",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipoCuenta\": \"Ahorros\",\n  \"saldoInicial\": 1000,\n  \"estado\": true,\n  \"clienteId\": \"jose\"\n}"
+            },
+            "url": {
+              "raw": "{{cuenta_url}}/api/cuentas/{{cuenta_id}}",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "cuentas",
+                "{{cuenta_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar cuenta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{cuenta_url}}/api/cuentas/{{cuenta_id}}",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "cuentas",
+                "{{cuenta_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Movimientos",
+      "item": [
+        {
+          "name": "Registrar deposito",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipoMovimiento\": \"Deposito\",\n  \"valor\": 600\n}"
+            },
+            "url": {
+              "raw": "{{cuenta_url}}/api/movimientos",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "movimientos"
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Deposito registrado', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "var body = pm.response.json();",
+                  "if (body.id !== undefined) { pm.collectionVariables.set('movimiento_id', body.id); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Registrar retiro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipoMovimiento\": \"Retiro\",\n  \"valor\": 500\n}"
+            },
+            "url": {
+              "raw": "{{cuenta_url}}/api/movimientos",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "movimientos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retiro sin saldo disponible",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipoMovimiento\": \"Retiro\",\n  \"valor\": 2000\n}"
+            },
+            "url": {
+              "raw": "{{cuenta_url}}/api/movimientos",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "movimientos"
+              ]
+            },
+            "description": "Debe responder HTTP 400 con {\"mensaje\":\"Saldo no disponible\"}."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Saldo insuficiente devuelve 400', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "pm.test('Mensaje de saldo no disponible', function () {",
+                  "    pm.expect(pm.response.json().mensaje).to.eql('Saldo no disponible');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Consultar movimientos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{cuenta_url}}/api/movimientos",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "movimientos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar movimiento",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroCuenta\": \"478758\",\n  \"tipoMovimiento\": \"Deposito\",\n  \"valor\": 600\n}"
+            },
+            "url": {
+              "raw": "{{cuenta_url}}/api/movimientos/{{movimiento_id}}",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "movimientos",
+                "{{movimiento_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar movimiento",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{cuenta_url}}/api/movimientos/{{movimiento_id}}",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "movimientos",
+                "{{movimiento_id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reportes",
+      "item": [
+        {
+          "name": "Consultar estado de cuenta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{cuenta_url}}/api/reportes?clienteId=jose&fechaInicio=2026-01-01T00:00:00&fechaFin=2030-12-31T23:59:59",
+              "host": [
+                "{{cuenta_url}}"
+              ],
+              "path": [
+                "api",
+                "reportes"
+              ],
+              "query": [
+                {
+                  "key": "clienteId",
+                  "value": "jose"
+                },
+                {
+                  "key": "fechaInicio",
+                  "value": "2026-01-01T00:00:00"
+                },
+                {
+                  "key": "fechaFin",
+                  "value": "2030-12-31T23:59:59"
+                }
+              ]
+            },
+            "description": "Genera el estado de cuenta usando exactamente los parametros del ReporteController."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
