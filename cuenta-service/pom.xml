@@ -8,10 +8,10 @@
 		<version>4.0.8</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.tcs</groupId>
-	<artifactId>cliente-service</artifactId>
+	<groupId>com.tsc</groupId>
+	<artifactId>cuenta-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cliente-service</name>
+	<name>cuenta-service</name>
 	<description/>
 	<url/>
 	<licenses>
@@ -71,11 +71,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.8.13</version>
 		</dependency>
 	</dependencies>
 
