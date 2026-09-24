@@ -5,6 +5,7 @@ import com.tcs.cliente.dto.ClienteResponse;
 import com.tcs.cliente.service.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ClienteResponse crear(@RequestBody ClienteRequest request) {
+    public ClienteResponse crear(@Valid @RequestBody ClienteRequest request) {
         return clienteService.crear(request);
     }
 
@@ -37,7 +38,7 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ClienteResponse actualizar(
             @PathVariable Long id,
-            @RequestBody ClienteRequest request) {
+            @Valid @RequestBody ClienteRequest request) {
         return clienteService.actualizar(id, request);
     }
 

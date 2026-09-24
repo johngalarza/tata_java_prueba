@@ -3,6 +3,8 @@ package com.tcs.cliente.service;
 import com.tcs.cliente.dto.ClienteRequest;
 import com.tcs.cliente.dto.ClienteResponse;
 import com.tcs.cliente.entity.Cliente;
+import com.tcs.cliente.exception.ConflictException;
+import com.tcs.cliente.exception.ResourceNotFoundException;
 import com.tcs.cliente.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +22,11 @@ public class ClienteService {
     public ClienteResponse crear(ClienteRequest request) {
 
         if (clienteRepository.existsByClienteId(request.clienteId())) {
-            throw new IllegalArgumentException("El clienteId ya existe");
+            throw new ConflictException("El clienteId ya existe");
         }
 
         if (clienteRepository.existsByIdentificacion(request.identificacion())) {
-            throw new IllegalArgumentException("La identificacion ya existe");
+            throw new ConflictException("La identificacion ya existe");
         }
 
         Cliente cliente = new Cliente();
@@ -81,7 +83,7 @@ public class ClienteService {
     public void eliminar(Long id) {
 
         if (!clienteRepository.existsById(id)) {
-            throw new IllegalArgumentException("Cliente no encontrado");
+            throw new ResourceNotFoundException("Cliente no encontrado");
         }
 
         clienteRepository.deleteById(id);
