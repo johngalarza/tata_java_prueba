@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: cuenta-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/cuenta_db
+    username: banco
+    password: banco
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8082
